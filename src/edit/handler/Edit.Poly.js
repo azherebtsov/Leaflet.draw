@@ -342,6 +342,10 @@ L.Edit.PolyVerticesEdit = L.Handler.extend({
 
 	_onMarkerClick: function (e) {
 
+		if(this._poly.editing.deleteVertexEnabled === false) {
+			return;
+		}
+
 		var minPoints = L.Polygon && (this._poly instanceof L.Polygon) ? 4 : 3,
 			marker = e.target;
 
@@ -413,6 +417,10 @@ L.Edit.PolyVerticesEdit = L.Handler.extend({
 	},
 
 	_createMiddleMarker: function (marker1, marker2) {
+		if(this._poly.editing.newVertexEnabled === false) {
+			return;
+		}
+
 		var latlng = this._getMiddleLatLng(marker1, marker2),
 			marker = this._createMarker(latlng),
 			onClick,
