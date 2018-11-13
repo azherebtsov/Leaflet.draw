@@ -100,7 +100,7 @@ L.Edit.PolyVerticesEdit = L.Handler.extend({
 	// @method intialize(): void
 	initialize: function (poly, latlngs, options) {
 		// if touch, switch to touch icon
-		if (L.Browser.touch) {
+		if (L.Browser.touch && L.Browser.mobile) {
 			this.options.icon = this.options.touchIcon;
 		}
 		this._poly = poly;
@@ -490,11 +490,15 @@ L.Edit.PolyVerticesEdit = L.Handler.extend({
 	},
 
 	_getMiddleLatLng: function (marker1, marker2) {
-		var map = this._poly._map,
-			p1 = map.project(marker1.getLatLng()),
-			p2 = map.project(marker2.getLatLng());
+		var map = this._poly._map;
+		if( (this.options.gcpoly || this._poly.options.gcpoly) && marker1.getLatLng().intermediatePointTo) {
+			return marker1.getLatLng().intermediatePointTo(marker2.getLatLng(),0.5);
+		} else {
+			var p1 = map.project(marker1.getLatLng()),
+				  p2 = map.project(marker2.getLatLng());
 
-		return map.unproject(p1._add(p2)._divideBy(2));
+			return map.unproject(p1._add(p2)._divideBy(2));
+		}
 	}
 });
 
