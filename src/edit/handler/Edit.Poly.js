@@ -62,7 +62,7 @@ L.Edit.Poly = L.Handler.extend({
 	_initHandlers: function () {
 		this._verticesHandlers = [];
 		for (var i = 0; i < this.latlngs.length; i++) {
-			this._verticesHandlers.push(new L.Edit.PolyVerticesEdit(this._poly, this.latlngs[i], this._poly.options.poly));
+			this._verticesHandlers.push(new L.Edit.PolyVerticesEdit(this._poly, this.latlngs[i], this._poly.options));
 		}
 	},
 
@@ -296,11 +296,11 @@ L.Edit.PolyVerticesEdit = L.Handler.extend({
 
 		var oldOrigLatLng = L.LatLngUtil.cloneLatLng(marker._origLatLng);
 		L.extend(marker._origLatLng, marker._latlng);
-		if (poly.options.poly) {
+		if (poly.options) {
 			var tooltip = poly._map._editTooltip; // Access the tooltip
 
 			// If we don't allow intersections and the polygon intersects
-			if ((!poly.options.poly.allowIntersection && poly.intersects()) ||
+			if ((!poly.options.allowIntersection && poly.intersects()) ||
 					(poly.options.validateConstraints !== undefined && !poly.options.validateConstraints(poly, marker))) {
 				L.extend(marker._origLatLng, oldOrigLatLng);
 				marker.setLatLng(oldOrigLatLng);
