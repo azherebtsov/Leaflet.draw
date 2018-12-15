@@ -304,7 +304,7 @@ L.Edit.PolyVerticesEdit = L.Handler.extend({
 					(poly.options.validateConstraints !== undefined && !poly.options.validateConstraints(poly, marker))) {
 				L.extend(marker._origLatLng, oldOrigLatLng);
 				marker.setLatLng(oldOrigLatLng);
-				var originalColor = poly.options.color;
+				var originalColor = this.options.color;
 				poly.setStyle({color: this.options.drawError.color});
 				if (tooltip) {
 					tooltip.updateContent({
